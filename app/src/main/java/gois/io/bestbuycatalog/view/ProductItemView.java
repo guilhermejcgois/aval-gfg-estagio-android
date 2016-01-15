@@ -1,5 +1,6 @@
 package gois.io.bestbuycatalog.view;
 
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
@@ -7,6 +8,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.os.Build;
 import android.text.TextPaint;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -22,6 +24,8 @@ import android.widget.TextView;
 import gois.io.bestbuycatalog.R;
 import gois.io.bestbuycatalog.model.Product;
 import gois.io.bestbuycatalog.task.DownloadImageTask;
+
+import static android.graphics.Color.WHITE;
 
 /**
  * TODO: document your custom view class.
@@ -63,12 +67,18 @@ public class ProductItemView extends GridView {
         Log.i(CATEG, "Initialized...");
     }
 
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     public View build(View convertView, ViewGroup parent) {
         if (convertView == null) {
             LayoutInflater inflater = LayoutInflater.from(getContext());
             convertView = inflater.inflate(R.layout.product_item_view, parent, false);
         }
+
+        convertView.setBackgroundColor(WHITE);
+        convertView.setElevation(2.0f);
+
         ImageView image = (ImageView) convertView.findViewById(R.id.productImageView);
+        image.setMinimumHeight(parent.getHeight() / 4);
         new DownloadImageTask(image).execute(product.getImageURLs("item"));
 
         TextView name = (TextView) convertView.findViewById(R.id.nameTextView);
