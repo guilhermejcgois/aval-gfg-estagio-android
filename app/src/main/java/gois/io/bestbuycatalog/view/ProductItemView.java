@@ -79,7 +79,7 @@ public class ProductItemView extends GridView {
 
         ImageView image = (ImageView) convertView.findViewById(R.id.productImageView);
         image.setMinimumHeight(parent.getHeight() / 4);
-        new DownloadImageTask(image).execute(product.getImageURLs("item"));
+        new DownloadImageTask(image).execute(product.getUrlItemImage());
 
         TextView name = (TextView) convertView.findViewById(R.id.nameTextView);
         name.setText(product.getName());

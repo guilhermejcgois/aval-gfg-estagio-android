@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">BestBuyCatalog</string>
+    <string name="action_favorite">Favorite Me</string>
+    <string name="action_settings">Settings</string>
+    <string name="action_search">Search...</string>
+    <string name="appwidget_text">EXAMPLE</string>
+    <string name="add_widget">Add widget</string>
+</resources>
