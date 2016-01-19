@@ -32,6 +32,8 @@ public class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
 
     @Override
     protected Bitmap doInBackground(String... urls) {
+        log("BEGIN doInBackground");
+
         String url = urls[0];
         Bitmap bitmap = null;//bitmapCache.get(url);
 
@@ -47,12 +49,18 @@ public class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
             e.printStackTrace();
         }
 
+        log("END doInBackground");
+
         return bitmap;
     }
 
     @Override
     protected void onPostExecute(Bitmap bitmap) {
+        log("BEGin doInBackground");
+
         image.setImageBitmap(bitmap);
+
+        log("END doInBackground");
     }
 
     private static DownloadImageTask _instance;
@@ -63,5 +71,10 @@ public class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
         _instance.setImage(view);
 
         return _instance;
+    }
+
+    private final String CATEG = "DownloadImageTask";
+    private void log(String message) {
+        Log.v(CATEG, message);
     }
 }

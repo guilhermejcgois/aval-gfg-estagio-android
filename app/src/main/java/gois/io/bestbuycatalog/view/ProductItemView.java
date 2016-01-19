@@ -35,6 +35,8 @@ public class ProductItemView extends GridView {
 
     private Product product;
 
+    private View view;
+
     public ProductItemView(Context context) {
         super(context);
         init(null, 0);
@@ -56,6 +58,7 @@ public class ProductItemView extends GridView {
 
     public void setProduct(Product product) {
         this.product = product;
+        updateView();
     }
 
     private void init(AttributeSet attrs, int defStyle) {
@@ -76,20 +79,31 @@ public class ProductItemView extends GridView {
 
         convertView.setBackgroundColor(WHITE);
         convertView.setElevation(2.0f);
+        this.view = convertView;
 
-        ImageView image = (ImageView) convertView.findViewById(R.id.productImageView);
-        image.setMinimumHeight(parent.getHeight() / 4);
+        if (product == null)
+            return  this.view;
+
+        return updateView();
+    }
+
+    public View updateView() {
+        Log.v(CATEG, "Updating view...");
+        ImageView image = (ImageView) view.findViewById(R.id.productImageView);
+        //image.setMinimumHeight(parent.getHeight() / 4);
         new DownloadImageTask(image).execute(product.getUrlItemImage());
 
-        TextView name = (TextView) convertView.findViewById(R.id.nameTextView);
+        TextView name = (TextView) view.findViewById(R.id.nameTextView);
+        String pName = product.getName();
+        pName = pName.substring(pName.indexOf('-') + 2);
         name.setText(product.getName());
 
-        TextView brand = (TextView) convertView.findViewById(R.id.brandTextView);
+        TextView brand = (TextView) view.findViewById(R.id.brandTextView);
         brand.setText(product.getBrand());
 
-        TextView price = (TextView) convertView.findViewById(R.id.priceTextView);
+        TextView price = (TextView) view.findViewById(R.id.priceTextView);
         price.setText("$ " + product.getPrice());
 
-        return convertView;
+        return view;
     }
 }

@@ -6,6 +6,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -16,9 +17,16 @@ import gois.io.bestbuycatalog.task.DownloadImageTask;
 
 public class ProductDetailActivity extends AppCompatActivity {
 
+    public ProductDetailActivity() {
+        log("ProductDetailActivity");
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        log("BEGIN onCreate");
+
         setContentView(R.layout.activity_product_detail);
 
         // setting the activity toolbar
@@ -38,10 +46,14 @@ public class ProductDetailActivity extends AppCompatActivity {
             ((TextView) findViewById(R.id.priceTextView)).setText("$ " + product.getPrice());
             ((TextView) findViewById(R.id.descriptionTextView)).setText(product.getDescription());
         }
+
+        log("END onCreate");
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        log("onOptionsItemSelected");
+
         switch (item.getItemId()) {
             case android.R.id.home:
                 NavUtils.navigateUpFromSameTask(this);
@@ -49,5 +61,15 @@ public class ProductDetailActivity extends AppCompatActivity {
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    private final String CATEG = "ProductDetailActivity";
+    private static int v = 0;
+    private int vv;
+    private void setVV() {
+        vv = v++;
+    }
+    private void log(String message) {
+        Log.v(CATEG + vv, message);
     }
 }

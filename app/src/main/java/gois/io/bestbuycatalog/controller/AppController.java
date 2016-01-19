@@ -1,5 +1,7 @@
 package gois.io.bestbuycatalog.controller;
 
+import android.util.Log;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -33,6 +35,8 @@ public class AppController {
 
     private TaskCallback callbackObject;
 
+    private boolean lockedForRequest = false;
+
     /**
      * Class constructor.
      */
@@ -48,17 +52,35 @@ public class AppController {
         return products;
     }
 
+    public boolean isLockedForRequest() {
+        return lockedForRequest;
+    }
+
+    public void lockedForRequest() {
+        this.lockedForRequest = true;
+    }
+
+    public void unLockedForRequest() {
+        this.lockedForRequest = false;
+    }
+
     /**
      * Loads products from BestBuy.com.
      *
      * @return true if has products loaded, otherwise false.
      */
     public void loadProducts(TaskCallback callback) {
+        log("BEGIN loadProducts");
+
         callbackObject = callback;
-        productsTask.execute();
+        new GetProductsTask().execute();
+
+        log("END loadProducts");
     }
 
-    public void loadProductsfrom(JSONObject callback) {
+    public void loadProductsFrom(JSONObject callback) {
+        log("BEGIN loadProductsFrom");
+
         if (this.products == null) this.products = new ArrayList<>(); else this.products.clear();
 
         try {
@@ -81,6 +103,8 @@ public class AppController {
         }catch (JSONException e) {
             e.printStackTrace();
         }
+
+        log("END loadProductsFrom");
     }
 
     /**
@@ -98,5 +122,10 @@ public class AppController {
             _instance = new AppController();
 
         return _instance;
+    }
+
+    private final String CATEG = "AppController";
+    private void log(String message) {
+        Log.v(CATEG, message);
     }
 }

@@ -3,7 +3,6 @@ package gois.io.bestbuycatalog.task;
 import android.os.AsyncTask;
 import android.util.Log;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -15,7 +14,6 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 import gois.io.bestbuycatalog.controller.AppController;
-import gois.io.bestbuycatalog.model.Product;
 import gois.io.bestbuycatalog.util.QueryBuilder;
 
 /**
@@ -26,8 +24,14 @@ public class GetProductsTask extends AsyncTask<Void, Void, String> {
 
     private QueryBuilder queryBuilder = null;
 
+    public GetProductsTask() {
+        setVV();
+    }
+
     @Override
     protected String doInBackground(Void... params) {
+        log("BEGIN doInBackground");
+
         if (queryBuilder == null) {
             queryBuilder = new QueryBuilder()
                     .url("https://api.bestbuy.com/v1/")
@@ -75,6 +79,7 @@ public class GetProductsTask extends AsyncTask<Void, Void, String> {
                     while ((s = reader.readLine()) != null)
                         stringBuilder.append(s + "\n");
                     reader.close();
+                    log("END1 doInBackground");
                     return stringBuilder.substring(0);
             }
         } catch (MalformedURLException e) {
@@ -86,18 +91,33 @@ public class GetProductsTask extends AsyncTask<Void, Void, String> {
                 connection.disconnect();
         }
 
+        log("END2 doInBackground");
         return null;
     }
 
     @Override
     protected void onPostExecute(String s) {
+        log("BEGIN onPostExecute");
+
         try {
             if (s==null)
                 Log.i(GetProductsTask.class.getSimpleName(), "null");
             Log.i(GetProductsTask.class.getSimpleName(), s);
-            AppController.getInstance().loadProductsfrom(new JSONObject(s.substring(s.indexOf('{'))));
+            AppController.getInstance().loadProductsFrom(new JSONObject(s.substring(s.indexOf('{'))));
         } catch (JSONException e) {
             e.printStackTrace();
         }
+
+        log("END onPostExecute");
+    }
+
+    private final String CATEG = "GetProductsTask";
+    private static int v = 0;
+    private int vv;
+    private void setVV() {
+        vv = v++;
+    }
+    private void log(String message) {
+        Log.v(CATEG + vv, message);
     }
 }

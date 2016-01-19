@@ -1,5 +1,8 @@
 package gois.io.bestbuycatalog.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
