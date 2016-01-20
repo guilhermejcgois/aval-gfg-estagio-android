@@ -1,4 +1,4 @@
-package gois.io.bestbuycatalog.task;
+package io.gois.bestbuycatalog.task;
 
 import android.os.AsyncTask;
 import android.util.Log;
@@ -13,8 +13,8 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-import gois.io.bestbuycatalog.controller.AppController;
-import gois.io.bestbuycatalog.util.QueryBuilder;
+import io.gois.bestbuycatalog.controller.AppController;
+import io.gois.bestbuycatalog.util.QueryBuilder;
 
 /**
  * <code>AsyncTask</code> to get the products from bestbuy.com.

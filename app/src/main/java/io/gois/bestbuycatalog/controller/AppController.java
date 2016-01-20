@@ -1,4 +1,4 @@
-package gois.io.bestbuycatalog.controller;
+package io.gois.bestbuycatalog.controller;
 
 import android.util.Log;
 
@@ -9,9 +9,9 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-import gois.io.bestbuycatalog.model.Product;
-import gois.io.bestbuycatalog.task.GetProductsTask;
-import gois.io.bestbuycatalog.task.TaskCallback;
+import io.gois.bestbuycatalog.model.Product;
+import io.gois.bestbuycatalog.task.GetProductsTask;
+import io.gois.bestbuycatalog.task.TaskCallback;
 
 /**
  * Application singleton controller.

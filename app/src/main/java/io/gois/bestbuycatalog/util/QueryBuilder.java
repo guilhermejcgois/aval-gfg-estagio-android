@@ -1,4 +1,4 @@
-package gois.io.bestbuycatalog.util;
+package io.gois.bestbuycatalog.util;
 
 import android.util.Log;
 

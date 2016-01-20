@@ -1,4 +1,4 @@
-package gois.io.bestbuycatalog.task;
+package io.gois.bestbuycatalog.task;
 
 /**
  * A interface to simulate a JS callback when executing asynchronous tasks.

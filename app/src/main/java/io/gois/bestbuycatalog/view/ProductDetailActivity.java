@@ -1,4 +1,4 @@
-package gois.io.bestbuycatalog.view;
+package io.gois.bestbuycatalog.view;
 
 import android.content.Intent;
 import android.support.v4.app.NavUtils;
@@ -11,9 +11,9 @@ import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import gois.io.bestbuycatalog.R;
-import gois.io.bestbuycatalog.model.Product;
-import gois.io.bestbuycatalog.task.DownloadImageTask;
+import io.gois.bestbuycatalog.R;
+import io.gois.bestbuycatalog.model.Product;
+import io.gois.bestbuycatalog.task.DownloadImageTask;
 
 public class ProductDetailActivity extends AppCompatActivity {
 

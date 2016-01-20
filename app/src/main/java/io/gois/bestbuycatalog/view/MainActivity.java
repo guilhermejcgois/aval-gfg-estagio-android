@@ -1,4 +1,4 @@
-package gois.io.bestbuycatalog.view;
+package io.gois.bestbuycatalog.view;
 
 import android.content.res.Configuration;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -13,12 +13,12 @@ import android.view.MenuItem;
 
 import java.util.ArrayList;
 
-import gois.io.bestbuycatalog.R;
-import gois.io.bestbuycatalog.model.Product;
-import gois.io.bestbuycatalog.task.TaskCallback;
-import gois.io.bestbuycatalog.view.adapter.ProductItemAdapter;
+import io.gois.bestbuycatalog.R;
+import io.gois.bestbuycatalog.model.Product;
+import io.gois.bestbuycatalog.task.TaskCallback;
+import io.gois.bestbuycatalog.view.adapter.ProductItemAdapter;
 
-import static gois.io.bestbuycatalog.controller.AppController.*;
+import static io.gois.bestbuycatalog.controller.AppController.*;
 
 public class MainActivity extends AppCompatActivity implements TaskCallback {
 

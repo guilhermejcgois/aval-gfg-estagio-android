@@ -1,4 +1,4 @@
-package gois.io.bestbuycatalog.view.adapter;
+package io.gois.bestbuycatalog.view.adapter;
 
 import android.content.Context;
 import android.content.Intent;
@@ -14,10 +14,10 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
-import gois.io.bestbuycatalog.R;
-import gois.io.bestbuycatalog.model.Product;
-import gois.io.bestbuycatalog.task.DownloadImageTask;
-import gois.io.bestbuycatalog.view.ProductDetailActivity;
+import io.gois.bestbuycatalog.R;
+import io.gois.bestbuycatalog.model.Product;
+import io.gois.bestbuycatalog.task.DownloadImageTask;
+import io.gois.bestbuycatalog.view.ProductDetailActivity;
 
 import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
 import static android.graphics.Color.WHITE;

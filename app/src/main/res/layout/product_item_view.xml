@@ -1,7 +1,7 @@
 <GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:custom="http://schemas.android.com/apk/res-auto"
     xmlns:namespace="http://schemas.android.com/tools"
-    namespace:app="http://schemas.android.com/apk/res/gois.io.bestbuycatalog"
+    namespace:app="http://schemas.android.com/apk/res/io.gois.bestbuycatalog"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:elevation="2dp"

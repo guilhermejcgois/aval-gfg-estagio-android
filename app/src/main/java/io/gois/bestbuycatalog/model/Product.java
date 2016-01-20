@@ -1,4 +1,4 @@
-package gois.io.bestbuycatalog.model;
+package io.gois.bestbuycatalog.model;
 
 import java.io.Serializable;
 

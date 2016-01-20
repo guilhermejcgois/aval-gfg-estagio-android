@@ -1,4 +1,4 @@
-package gois.io.bestbuycatalog.view;
+package io.gois.bestbuycatalog.view;
 
 import android.content.Context;
 import android.util.AttributeSet;

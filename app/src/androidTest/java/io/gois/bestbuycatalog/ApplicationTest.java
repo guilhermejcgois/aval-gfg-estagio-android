@@ -1,4 +1,4 @@
-package gois.io.bestbuycatalog;
+package io.gois.bestbuycatalog;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;

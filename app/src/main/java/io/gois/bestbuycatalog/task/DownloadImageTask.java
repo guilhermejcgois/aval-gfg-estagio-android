@@ -1,4 +1,4 @@
-package gois.io.bestbuycatalog.task;
+package io.gois.bestbuycatalog.task;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
