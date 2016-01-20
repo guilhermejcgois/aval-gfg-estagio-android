@@ -5,8 +5,6 @@ import android.util.Log;
 import java.util.ArrayList;
 import java.util.List;
 
-import gois.io.bestbuycatalog.R;
-
 public class QueryBuilder {
 
     private String url = "";

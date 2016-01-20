@@ -1,21 +1,11 @@
 package gois.io.bestbuycatalog.model;
 
-import android.os.Parcel;
-import android.os.Parcelable;
-
 import java.io.Serializable;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * This class represents a product at BetBuy.com
  */
 public class Product implements Serializable {
-
-    /**
-     * The id of the product.
-     */
-    private Integer id;
 
     /**
      * The name of the product.
@@ -51,24 +41,6 @@ public class Product implements Serializable {
      * Class constructor.
      */
     public Product() {
-    }
-
-    /**
-     * Returns the product's id.
-     *
-     * @return the product's id.
-     */
-    public Integer getId() {
-        return id;
-    }
-
-    /**
-     * Sets the product's id.
-     *
-     * @param id the product's id.
-     */
-    public void setId(Integer id) {
-        this.id = id;
     }
 
     /**

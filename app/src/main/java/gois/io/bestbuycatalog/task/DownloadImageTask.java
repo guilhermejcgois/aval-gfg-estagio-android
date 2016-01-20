@@ -8,37 +8,36 @@ import android.widget.ImageView;
 
 import java.io.InputStream;
 import java.net.URL;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
+ * <code>AsyncTask</code> to download images.
  * Credits: http://stackoverflow.com/questions/2471935/how-to-load-an-imageview-by-url-in-android
  */
 public class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
     ImageView image;
-    //Map<String, Bitmap> bitmapCache;
 
-    public DownloadImageTask() {
-        //bitmapCache = new HashMap<>();
-    }
-
+    /**
+     * Class constructor.
+     *
+     * @param image the <code>ImageView</code> to load the image.
+     */
     public DownloadImageTask(ImageView image) {
         this.image = image;
     }
 
-    public void setImage(ImageView image) {
-        this.image = image;
-    }
-
+    /**
+     * Downloads the image outside the UI thread.
+     *
+     * @param urls a array of urls to be downloaded. In fact, only one url is downloaded, the first
+     *             in the array.
+     * @return the image loaded.
+     */
     @Override
     protected Bitmap doInBackground(String... urls) {
         log("BEGIN doInBackground");
 
         String url = urls[0];
-        Bitmap bitmap = null;//bitmapCache.get(url);
-
-        //if (bitmap != null)
-            //return bitmap;
+        Bitmap bitmap = null;
 
         try {
             InputStream in = new URL(url).openStream();
@@ -54,26 +53,21 @@ public class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
         return bitmap;
     }
 
+    /**
+     * Sets the image to the <code>ImageView</code> after download it.
+     *
+     * @param bitmap the image downloaded.
+     */
     @Override
     protected void onPostExecute(Bitmap bitmap) {
-        log("BEGin doInBackground");
+        log("BEGIN onPostExecute");
 
         image.setImageBitmap(bitmap);
 
-        log("END doInBackground");
+        log("END onPostExecute");
     }
 
-    private static DownloadImageTask _instance;
-
-    public static DownloadImageTask getInstance(ImageView view) {
-        if (_instance == null)
-            _instance = new DownloadImageTask();
-        _instance.setImage(view);
-
-        return _instance;
-    }
-
-    private final String CATEG = "DownloadImageTask";
+    private static final String CATEG = "DownloadImageTask";
     private void log(String message) {
         Log.v(CATEG, message);
     }

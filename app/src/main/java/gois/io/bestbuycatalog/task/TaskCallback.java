@@ -1,9 +1,13 @@
 package gois.io.bestbuycatalog.task;
 
 /**
- * Created by USER on 17/01/2016.
+ * A interface to simulate a JS callback when executing asynchronous tasks.
  */
 public interface TaskCallback {
 
-    public void doSomething(Object o);
+    /**
+     * Do something with anything.
+     * @param o the anything.
+     */
+    void doSomething(Object o);
 }

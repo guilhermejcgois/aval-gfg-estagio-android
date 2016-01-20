@@ -1,55 +1,35 @@
 package gois.io.bestbuycatalog.view;
 
-import android.content.Intent;
 import android.content.res.Configuration;
-import android.database.DataSetObserver;
-import android.os.Parcelable;
-import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.AbsListView;
-import android.widget.AdapterView;
-import android.widget.Button;
-import android.widget.GridLayout;
-import android.widget.GridView;
-import android.widget.TextView;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 import gois.io.bestbuycatalog.R;
-import gois.io.bestbuycatalog.controller.AppController;
 import gois.io.bestbuycatalog.model.Product;
 import gois.io.bestbuycatalog.task.TaskCallback;
 import gois.io.bestbuycatalog.view.adapter.ProductItemAdapter;
+
+import static gois.io.bestbuycatalog.controller.AppController.*;
 
 public class MainActivity extends AppCompatActivity implements TaskCallback {
 
     private ProductItemAdapter adapter;
 
     private SwipeRefreshLayout swipeContainer;
-    private RecyclerView itemsView;
-
-    private boolean taskIsRunning = false;
 
     public MainActivity() {
         setVV();
         log("BEGIN MainActivity");
-        AppController.getInstance().loadProducts(this);
-        taskIsRunning = true;
+        getInstance().loadProducts(this);
         log("END MainActivity");
     }
 
@@ -71,7 +51,7 @@ public class MainActivity extends AppCompatActivity implements TaskCallback {
             @Override
             public void onRefresh() {
                 adapter.clear();
-                AppController.getInstance().loadProducts(MainActivity.this);
+                getInstance().loadProducts(MainActivity.this);
             }
         });
         // Configure the refreshing colors
@@ -81,7 +61,7 @@ public class MainActivity extends AppCompatActivity implements TaskCallback {
                 android.R.color.holo_red_light);
 
 
-        itemsView = (RecyclerView) findViewById(R.id.home_items);
+        RecyclerView itemsView = (RecyclerView) findViewById(R.id.home_items);
         itemsView.setHasFixedSize(true);
 
         final GridLayoutManager layoutManager;
@@ -111,7 +91,7 @@ public class MainActivity extends AppCompatActivity implements TaskCallback {
             @Override
             public void onLoadMore() {
                 if (!swipeContainer.isRefreshing())
-                    AppController.getInstance().loadProducts(MainActivity.this);
+                    getInstance().loadProducts(MainActivity.this);
             }
         });
         itemsView.setAdapter(adapter);
@@ -125,11 +105,12 @@ public class MainActivity extends AppCompatActivity implements TaskCallback {
         log("BEGIN onCreateOptionsMenu");
 
         getMenuInflater().inflate(R.menu.home_menu, menu);
-
+/*
         MenuItem searchItem = menu.findItem(R.id.action_search);
         SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
 
         // configure the search info and add any event listeners...
+*/
 
         boolean ret = super.onCreateOptionsMenu(menu);
 
@@ -149,7 +130,6 @@ public class MainActivity extends AppCompatActivity implements TaskCallback {
 
         adapter.addAll((ArrayList<Product>) o);
         adapter.notifyDataSetChanged();
-        taskIsRunning = false;
 
         if (swipeContainer.isRefreshing())
             swipeContainer.setRefreshing(false);
@@ -159,7 +139,7 @@ public class MainActivity extends AppCompatActivity implements TaskCallback {
         adapter.setLoaded();
     }
 
-    private final String CATEG = "MainActivity";
+    private static final String CATEG = "MainActivity";
     private static int v = 0;
     private int vv;
     private void setVV() {

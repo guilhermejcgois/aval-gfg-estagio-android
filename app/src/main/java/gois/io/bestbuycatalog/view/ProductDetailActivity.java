@@ -35,7 +35,8 @@ public class ProductDetailActivity extends AppCompatActivity {
 
         // enabling up button
         ActionBar actionBar = getSupportActionBar();
-        actionBar.setDisplayHomeAsUpEnabled(true);
+        if (actionBar != null)
+            actionBar.setDisplayHomeAsUpEnabled(true);
 
         Intent intent = getIntent();
         if (intent != null) {
@@ -43,7 +44,8 @@ public class ProductDetailActivity extends AppCompatActivity {
             new DownloadImageTask((ImageView) findViewById(R.id.productImageView)).execute(product.getUrlDetailImage());
             ((TextView) findViewById(R.id.nameTextView)).setText(product.getName());
             ((TextView) findViewById(R.id.brandTextView)).setText(product.getBrand());
-            ((TextView) findViewById(R.id.priceTextView)).setText("$ " + product.getPrice());
+            String pPrice = "$ " + product.getPrice();
+            ((TextView) findViewById(R.id.priceTextView)).setText(pPrice);
             ((TextView) findViewById(R.id.descriptionTextView)).setText(product.getDescription());
         }
 
@@ -63,13 +65,8 @@ public class ProductDetailActivity extends AppCompatActivity {
         }
     }
 
-    private final String CATEG = "ProductDetailActivity";
-    private static int v = 0;
-    private int vv;
-    private void setVV() {
-        vv = v++;
-    }
+    private static final String CATEG = "ProductDetailActivity";
     private void log(String message) {
-        Log.v(CATEG + vv, message);
+        Log.v(CATEG, message);
     }
 }

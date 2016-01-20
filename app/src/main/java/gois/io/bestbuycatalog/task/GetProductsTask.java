@@ -17,17 +17,35 @@ import gois.io.bestbuycatalog.controller.AppController;
 import gois.io.bestbuycatalog.util.QueryBuilder;
 
 /**
- * https://api.bestbuy.com/v1/products((categoryPath.id=pcmcat209400050001))?apiKey=sxwj3hhtpnkqex9m95tc7cb5&sort=bestSellingRank.asc&show=bestSellingRank,name,manufacturer,regularPrice,salePrice,image,thumbnailImage,description,longDescription,shortDescription&callback=JSON_CALLBACK&format=json
- * https://api.bestbuy.com/v1/product(categoryPath.id=pcmcat209400050001)?apikey=sxwj3hhtpnkqex9m95tc7cb5&sort=name.asc&show=bestSellingRank,name,manufacturer,regularPrice,salePrice,image,thumbnailImage,description,longDescription,shortDescription&callback=JSON_CALLBACK&format=json
+ * <code>AsyncTask</code> to get the products from bestbuy.com.
+ * This is the query: https://api.bestbuy.com/v1/products((categoryPath.id=pcmcat209400050001))
+ *      ?apiKey=sxwj3hhtpnkqex9m95tc7cb5
+ *      &sort=bestSellingRank.asc
+ *      &show=bestSellingRank,name,manufacturer,regularPrice,salePrice,image,thumbnailImage,
+ *          description,longDescription,shortDescription
+ *      &callback=JSON_CALLBACK
+ *      &format=json
  */
 public class GetProductsTask extends AsyncTask<Void, Void, String> {
 
+    /**
+     * A <code>QueryBuilder</code> to build the query.
+     */
     private QueryBuilder queryBuilder = null;
 
+    /**
+     * Class constructor.
+     */
     public GetProductsTask() {
         setVV();
     }
 
+    /**
+     * Builds and execute the query to load products.
+     *
+     * @param params not important.
+     * @return the json callback from the query.
+     */
     @Override
     protected String doInBackground(Void... params) {
         log("BEGIN doInBackground");
@@ -77,13 +95,11 @@ public class GetProductsTask extends AsyncTask<Void, Void, String> {
                     StringBuilder stringBuilder = new StringBuilder();
                     String s;
                     while ((s = reader.readLine()) != null)
-                        stringBuilder.append(s + "\n");
+                        stringBuilder.append(s).append("\n");
                     reader.close();
                     log("END1 doInBackground");
                     return stringBuilder.substring(0);
             }
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
@@ -95,6 +111,12 @@ public class GetProductsTask extends AsyncTask<Void, Void, String> {
         return null;
     }
 
+    /**
+     * Do the job of call the method to convert the json callback in a <code>List</code> of
+     * <code>Products</code>.
+     *
+     * @param s the json callback from querying the api.
+     */
     @Override
     protected void onPostExecute(String s) {
         log("BEGIN onPostExecute");
@@ -103,7 +125,8 @@ public class GetProductsTask extends AsyncTask<Void, Void, String> {
             if (s==null)
                 Log.i(GetProductsTask.class.getSimpleName(), "null");
             Log.i(GetProductsTask.class.getSimpleName(), s);
-            AppController.getInstance().loadProductsFrom(new JSONObject(s.substring(s.indexOf('{'))));
+            if (s != null)
+                AppController.getInstance().loadProductsFrom(new JSONObject(s.substring(s.indexOf('{'))));
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -111,7 +134,7 @@ public class GetProductsTask extends AsyncTask<Void, Void, String> {
         log("END onPostExecute");
     }
 
-    private final String CATEG = "GetProductsTask";
+    private static final String CATEG = "GetProductsTask";
     private static int v = 0;
     private int vv;
     private void setVV() {

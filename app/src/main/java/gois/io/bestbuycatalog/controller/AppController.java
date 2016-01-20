@@ -6,20 +6,12 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
 import gois.io.bestbuycatalog.model.Product;
 import gois.io.bestbuycatalog.task.GetProductsTask;
 import gois.io.bestbuycatalog.task.TaskCallback;
-import gois.io.bestbuycatalog.util.QueryBuilder;
-import gois.io.bestbuycatalog.view.MainActivity;
 
 /**
  * Application singleton controller.
@@ -27,47 +19,23 @@ import gois.io.bestbuycatalog.view.MainActivity;
 public class AppController {
 
     /**
-     * The list of products.
+     * A list of loaded products.
      */
     private List<Product> products;
 
-    private GetProductsTask productsTask;
-
+    /**
+     * A object implementing the TaskCallback interface, just a try to simulate callback in JS.
+     */
     private TaskCallback callbackObject;
-
-    private boolean lockedForRequest = false;
 
     /**
      * Class constructor.
      */
     private AppController() {
-        productsTask = new GetProductsTask();
-    }
-
-    /**
-     * Returns the list of products.
-     * @return the list of products.
-     */
-    public List<Product> getProducts() {
-        return products;
-    }
-
-    public boolean isLockedForRequest() {
-        return lockedForRequest;
-    }
-
-    public void lockedForRequest() {
-        this.lockedForRequest = true;
-    }
-
-    public void unLockedForRequest() {
-        this.lockedForRequest = false;
     }
 
     /**
      * Loads products from BestBuy.com.
-     *
-     * @return true if has products loaded, otherwise false.
      */
     public void loadProducts(TaskCallback callback) {
         log("BEGIN loadProducts");
@@ -78,6 +46,12 @@ public class AppController {
         log("END loadProducts");
     }
 
+    /**
+     * This method is called in <code>GetProductsTask</code> (after <code>loadProducts</code>
+     * call), is where in fact the products are loaded.
+     *
+     * @param callback the json callback from api call.
+     */
     public void loadProductsFrom(JSONObject callback) {
         log("BEGIN loadProductsFrom");
 
@@ -91,7 +65,6 @@ public class AppController {
                 Product p = new Product();
                 p.setBrand(product.getString("manufacturer"));
                 p.setDescription(product.getString("longDescription"));
-                //p.setId(product.getInt("id"));
                 p.setName(product.getString("name"));
                 p.setPrice(product.getDouble("regularPrice"));
                 p.setUrlDetailImage(product.getString("image"));
@@ -124,7 +97,7 @@ public class AppController {
         return _instance;
     }
 
-    private final String CATEG = "AppController";
+    private static final String CATEG = "AppController";
     private void log(String message) {
         Log.v(CATEG, message);
     }

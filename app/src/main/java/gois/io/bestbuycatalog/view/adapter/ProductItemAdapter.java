@@ -1,35 +1,25 @@
 package gois.io.bestbuycatalog.view.adapter;
 
-import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
-import android.os.Build;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.BaseAdapter;
-import android.widget.Button;
 import android.widget.GridLayout;
-import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 import gois.io.bestbuycatalog.R;
 import gois.io.bestbuycatalog.model.Product;
 import gois.io.bestbuycatalog.task.DownloadImageTask;
-import gois.io.bestbuycatalog.view.MainActivity;
 import gois.io.bestbuycatalog.view.ProductDetailActivity;
-import gois.io.bestbuycatalog.view.ProductItemView;
 
+import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
 import static android.graphics.Color.WHITE;
 
 public class ProductItemAdapter extends RecyclerView.Adapter<ProductItemAdapter.ViewHolder> {
@@ -75,25 +65,10 @@ public class ProductItemAdapter extends RecyclerView.Adapter<ProductItemAdapter.
         }
     }
 
-    public boolean isLoading() {
-        return loading;
-    }
-
     public void setLoaded() {
         loading = false;
     }
 
-    private final String CATEG = "ProductItemAdapter";
-    private static int v = 0;
-    private int vv;
-    private void setVV() {
-        vv = v++;
-    }
-    private void log(String message) {
-        Log.v(CATEG + vv, message);
-    }
-
-    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     @Override
     public ProductItemAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
@@ -115,15 +90,15 @@ public class ProductItemAdapter extends RecyclerView.Adapter<ProductItemAdapter.
         new DownloadImageTask(image).execute(holder.product.getUrlItemImage());
 
         TextView name = (TextView) view.findViewById(R.id.nameTextView);
-        String pName = holder.product.getName();
-        pName = pName.substring(pName.indexOf('-') + 2);
-        name.setText(holder.product.getName());
+        String pName = holder.product.getName().substring(holder.product.getName().indexOf('-') + 2);
+        name.setText(pName);
 
         TextView brand = (TextView) view.findViewById(R.id.brandTextView);
         brand.setText(holder.product.getBrand());
 
         TextView price = (TextView) view.findViewById(R.id.priceTextView);
-        price.setText("$ " + holder.product.getPrice());
+        String sprice = "$ " + holder.product.getPrice();
+        price.setText(sprice);
     }
 
     @Override
@@ -162,8 +137,8 @@ public class ProductItemAdapter extends RecyclerView.Adapter<ProductItemAdapter.
                 public void onClick(View v) {
                     Intent intent = new Intent(ProductItemAdapter.this.context, ProductDetailActivity.class);
 
-                    intent.putExtra("product", (Serializable) product);
-                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    intent.putExtra("product", product);
+                    intent.setFlags(FLAG_ACTIVITY_NEW_TASK);
 
                     ProductItemAdapter.this.context.startActivity(intent);
                 }
