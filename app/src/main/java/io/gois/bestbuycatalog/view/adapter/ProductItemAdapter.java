@@ -2,6 +2,7 @@ package io.gois.bestbuycatalog.view.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -22,29 +23,64 @@ import io.gois.bestbuycatalog.view.ProductDetailActivity;
 import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
 import static android.graphics.Color.WHITE;
 
+/**
+ * <code>Adapter</code> for <code>RecyclerView</code> in <code>MainActivity</code>.
+ */
 public class ProductItemAdapter extends RecyclerView.Adapter<ProductItemAdapter.ViewHolder> {
 
     private List<Product> dataset;
 
+    /**
+     * The context of the <code>RecyclerView</code> owner activity.
+     */
     private Context context;
 
+    /**
+     * The owner of this adapter.
+     */
     private RecyclerView recyclerView;
 
+    /**
+     * Indicates that exists items being loaded.
+     */
     private boolean loading = false;
+
+    /**
+     * Indicates the number of items loaded.
+     */
     private int totalItemCount;
+
+    /**
+     * Indicate the last visible item.
+     */
     private int lastVisibleItem;
+
+    /**
+     * How much items can be more displayed.
+     */
     private int visibleThreshold = 2;
+
+    /**
+     * Listener to when more items needs to be loaded.
+     */
     private OnLoadMoreListener onLoadMoreListener;
 
+    /**
+     * Class constructos.
+     *
+     * @param context the <code>context</code> of the <code>Activity</code> that owns the
+     *                <code>recycleView</code>.
+     * @param recyclerView the <code>RecyclerView</code> that owns this adapter.
+     */
     public ProductItemAdapter(Context context, RecyclerView recyclerView) {
         this.context = context;
         this.recyclerView = recyclerView;
 
         this.dataset = new ArrayList<>();
 
-        if (recyclerView.getLayoutManager() instanceof LinearLayoutManager) {
+        if (recyclerView.getLayoutManager() instanceof GridLayoutManager) {
 
-            final LinearLayoutManager linearLayoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
+            final GridLayoutManager linearLayoutManager = (GridLayoutManager) recyclerView.getLayoutManager();
             recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
                 @Override
                 public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
@@ -65,6 +101,9 @@ public class ProductItemAdapter extends RecyclerView.Adapter<ProductItemAdapter.
         }
     }
 
+    /**
+     * Sets the flag meaning that the new items are loaded.
+     */
     public void setLoaded() {
         loading = false;
     }
@@ -106,6 +145,12 @@ public class ProductItemAdapter extends RecyclerView.Adapter<ProductItemAdapter.
         return dataset.size();
     }
 
+    /**
+     * Sets the <code>onLoadMoreListener</code>.
+     *
+     * @param onLoadMoreListener the <code>OnLoadMoreListener</code> to listen when new items are
+     *                           loaded.
+     */
     public void setOnLoadMoreListener(OnLoadMoreListener onLoadMoreListener) {
         this.onLoadMoreListener = onLoadMoreListener;
     }

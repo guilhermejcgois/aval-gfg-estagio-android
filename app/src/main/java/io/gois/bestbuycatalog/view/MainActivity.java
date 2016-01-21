@@ -64,6 +64,7 @@ public class MainActivity extends AppCompatActivity implements TaskCallback {
         RecyclerView itemsView = (RecyclerView) findViewById(R.id.home_items);
         itemsView.setHasFixedSize(true);
 
+        // Adapts the grid of items to the device screen length and current orientation.
         final GridLayoutManager layoutManager;
         int screenLayout = getResources().getConfiguration().screenLayout;
         if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT)
